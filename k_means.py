@@ -3,14 +3,17 @@
 
 import numpy as np
 
-def centroid(mem_ship,ps):
+def centroid(mem_ship,ps,k):
     V = [np.array([0.]*len(ps[0])) for i in xrange(k)]
     count = [0]*k
     for i in xrange(len(ps)):
         count[mem_ship[i]] += 1
         V[mem_ship[i]] += ps[i]
-    V = [V[i]/count[i] for i in xrange(k)]
-    return V
+    _V = []
+    for i in xrange(k):
+        if count[i] != 0:
+            _V.append(V[i]/count[i])
+    return _V
 
 def argmin(i,V,ps,k):
     min_i = 0
@@ -35,6 +38,7 @@ def k_means(ps,k):
             break
     while True:
         V = centroid(mem_ship,ps,k)
+        k = len(V)
         new_mem_ship = update(V,ps,k)
         if mem_ship == new_mem_ship:
             break

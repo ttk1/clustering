@@ -1,1 +1,0 @@
-tama@tamatani-no-MacBook-Pro.local.7494
