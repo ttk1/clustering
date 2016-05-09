@@ -3,8 +3,6 @@
 
 import numpy as np
 
-k = 5 #クラスタの数
-
 def centroid(mem_ship,ps):
     V = [np.array([0.]*len(ps[0])) for i in xrange(k)]
     count = [0]*k
@@ -14,7 +12,7 @@ def centroid(mem_ship,ps):
     V = [V[i]/count[i] for i in xrange(k)]
     return V
 
-def argmin(i,V,ps):
+def argmin(i,V,ps,k):
     min_i = 0
     min = sum((V[0]-np.array(ps[i]))**2)
     for j in xrange(1,k):
@@ -24,27 +22,22 @@ def argmin(i,V,ps):
             min = tmp
     return min_i
 
-def update(V,ps):
+def update(V,ps,k):
     new_mem_ship  = [None]*len(ps)
     for i in xrange(len(ps)):
-        new_mem_ship[i] = argmin(i,V,ps)
+        new_mem_ship[i] = argmin(i,V,ps,k)
     return new_mem_ship
             
-def k_means(ps):
+def k_means(ps,k):
     while True:
         mem_ship = list(np.random.randint(0,k,len(ps)))
         if len(set(mem_ship)) == k:
             break
     while True:
-        V = centroid(mem_ship,ps)
-        new_mem_ship = update(V,ps)
+        V = centroid(mem_ship,ps,k)
+        new_mem_ship = update(V,ps,k)
         if mem_ship == new_mem_ship:
             break
         else:
             mem_ship = new_mem_ship
     return mem_ship
-
-if __name__ == '__main__':
-    ps = np.random.rand(100,2)
-    mem_ship = k_means(ps)
-    print mem_ship

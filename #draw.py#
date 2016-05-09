@@ -11,7 +11,7 @@ from scipy.spatial import ConvexHull
 k = 10 #クラスタ数
 m = 1.7 #ファジィさの度合
 
-def draw_regs(ps,mem_ship):
+def draw_regs(ps,mem_ship,mode):
     for i in xrange(k):
         hull = ConvexHull(points)
         x = [points[i][0] for i in hull.vertices]
